@@ -5,8 +5,12 @@ export default function Layout(props: PropsWithChildren) {
     <html>
       <head>
         <title>WebSocket Learning</title>
+        <link rel="stylesheet" href="/static/styles.css" />
+        <script src="/static/main.js" />
       </head>
-      <body>{props.children}</body>
+      <body>
+        <main>{props.children}</main>
+      </body>
     </html>
   );
 }

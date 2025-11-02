@@ -3,7 +3,7 @@ import { createNodeWebSocket } from "@hono/node-ws";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
 import Layout from "./ui/layout.js";
-import Main from "./ui/main.js";
+import App from "./ui/app.js";
 import { serveStatic } from "@hono/node-server/serve-static";
 
 const app = new Hono();
@@ -11,7 +11,15 @@ const ws = createNodeWebSocket({
   app,
 });
 
-app.use("/static/*", serveStatic({ root: "./static" }));
+app.use(
+  "/static/*",
+  serveStatic({
+    root: "./",
+    onNotFound: (path, c) => {
+      console.log(`Unable to find path: ${path}`);
+    },
+  }),
+);
 
 app.use(
   "/*",
@@ -39,7 +47,7 @@ app.get(
 );
 
 app.get("/", (c) => {
-  return c.render(<Main />);
+  return c.render(<App />);
 });
 
 const server = serve(
