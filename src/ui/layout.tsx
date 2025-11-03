@@ -6,7 +6,7 @@ export default function Layout(props: PropsWithChildren) {
       <head>
         <title>WebSocket Learning</title>
         <link rel="stylesheet" href="/static/styles.css" />
-        <script src="/static/main.js" />
+        <script src="/static/main.js" defer />
       </head>
       <body>
         <main>{props.children}</main>

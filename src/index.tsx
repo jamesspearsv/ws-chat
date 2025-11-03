@@ -32,12 +32,21 @@ app.use(
 );
 
 app.get(
-  "/ws",
+  "/socket",
   ws.upgradeWebSocket((c) => {
     return {
-      onMessage(event, ws) {
+      onOpen() {
+        console.log("Client connected");
+      },
+      async onMessage(event, ws) {
         console.log(`Message from client: ${event.data}`);
-        ws.send("Hello from server!");
+        ws.send(
+          JSON.stringify({
+            message: "Hello from server!",
+            total_messages: await JSON.parse(event.data as string)
+              .total_messages!,
+          }),
+        );
       },
       onClose: () => {
         console.log("Client disconnected");

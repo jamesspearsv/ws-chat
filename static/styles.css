@@ -14,3 +14,7 @@ body {
 main {
     padding: 2rem;
 }
+
+section {
+    padding-block: 2rem;
+}
