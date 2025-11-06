@@ -4,9 +4,9 @@ export default function Layout(props: PropsWithChildren) {
   return (
     <html>
       <head>
-        <title>WebSocket Learning</title>
+        <title>WebSocket Playground</title>
         <link rel="stylesheet" href="/static/styles.css" />
-        <script src="/static/main.js" defer />
+        <script src="/static/client.js" defer />
       </head>
       <body>
         <main>{props.children}</main>

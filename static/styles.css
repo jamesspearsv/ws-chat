@@ -18,3 +18,18 @@ main {
 section {
     padding-block: 2rem;
 }
+
+.connected {
+    position: relative;
+}
+
+.connected::before {
+    content: "";
+    position: absolute;
+    top: 0.25rem;
+    left: -1.25rem;
+    height: 0.5rem;
+    aspect-ratio: 1/1;
+    background-color: forestgreen;
+    border-radius: 50%;
+}

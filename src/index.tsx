@@ -1,13 +1,15 @@
 import { serve } from "@hono/node-server";
+import { serveStatic } from "@hono/node-server/serve-static";
 import { createNodeWebSocket } from "@hono/node-ws";
 import { Hono } from "hono";
 import { jsxRenderer } from "hono/jsx-renderer";
-import Layout from "./ui/layout.js";
 import App from "./ui/app.js";
-import { serveStatic } from "@hono/node-server/serve-static";
+import Layout from "./ui/layout.js";
+import { nanoid } from "nanoid";
+import type { ClientMessage, ServerMessage } from "./lib/types.js";
 
 const app = new Hono();
-const ws = createNodeWebSocket({
+const node_ws = createNodeWebSocket({
   app,
 });
 
@@ -32,20 +34,34 @@ app.use(
 );
 
 app.get(
-  "/socket",
-  ws.upgradeWebSocket((c) => {
+  "/chat",
+  node_ws.upgradeWebSocket(() => {
     return {
-      onOpen() {
+      onOpen(_, ws) {
         console.log("Client connected");
+        const user_id = nanoid();
+        ws.send(
+          JSON.stringify({
+            action: "connect",
+            message: user_id,
+          } satisfies ServerMessage),
+        );
       },
       async onMessage(event, ws) {
         console.log(`Message from client: ${event.data}`);
+        const { action, message } = JSON.parse(
+          event.data as string,
+        ) as ClientMessage;
+
+        // TODO: Learn how to broadcast to all clients using hono/node-ws
+
+        console.log(node_ws);
+        // Return a success response to the original client
         ws.send(
           JSON.stringify({
-            message: "Hello from server!",
-            total_messages: await JSON.parse(event.data as string)
-              .total_messages!,
-          }),
+            action: "message",
+            message: "Message shared successfully",
+          } satisfies ServerMessage),
         );
       },
       onClose: () => {
@@ -69,4 +85,4 @@ const server = serve(
   },
 );
 
-ws.injectWebSocket(server);
+node_ws.injectWebSocket(server);

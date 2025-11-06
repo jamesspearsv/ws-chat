@@ -2,14 +2,16 @@
   "name": "signaling-server",
   "type": "module",
   "scripts": {
-    "dev": "tsx watch src/index.tsx",
+    "dev:node": "tsx watch src/index.tsx",
     "build": "tsc",
     "start": "node dist/index.js"
   },
   "dependencies": {
     "@hono/node-server": "^1.19.6",
     "@hono/node-ws": "^1.2.0",
-    "hono": "^4.10.4"
+    "hono": "^4.10.4",
+    "nanoid": "^5.1.6",
+    "ws": "^8.18.3"
   },
   "devDependencies": {
     "@types/node": "^20.11.17",
