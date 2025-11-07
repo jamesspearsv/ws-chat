@@ -49,17 +49,24 @@ app.get(
       },
       async onMessage(event, ws) {
         console.log(`Message from client: ${event.data}`);
-        const { action, message } = JSON.parse(
+        const { user_id, message } = JSON.parse(
           event.data as string,
         ) as ClientMessage;
 
-        // TODO: Learn how to broadcast to all clients using hono/node-ws
+        node_ws.wss.clients.forEach((client) => {
+          client.send(
+            JSON.stringify({
+              action: "broadcast",
+              user_id,
+              message,
+            }),
+          );
+        });
 
-        console.log(node_ws);
         // Return a success response to the original client
         ws.send(
           JSON.stringify({
-            action: "message",
+            action: "success",
             message: "Message shared successfully",
           } satisfies ServerMessage),
         );
@@ -78,6 +85,7 @@ app.get("/", (c) => {
 const server = serve(
   {
     fetch: app.fetch,
+    hostname: "0.0.0.0",
     port: 3000,
   },
   (info) => {

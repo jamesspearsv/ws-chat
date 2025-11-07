@@ -17,7 +17,7 @@ export default function App() {
       {/* Chat form */}
       <section>
         <form id="chat_form">
-          <input type="text" name="message" />
+          <input type="text" name="message" id="chatbox" />
           <input type="submit" value="Submit" />
         </form>
       </section>

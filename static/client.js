@@ -1,6 +1,7 @@
 const chat_form = document.getElementById("chat_form");
 const chat_thread = document.getElementById("chat_thread");
 const chat_status = document.getElementById("chat_status");
+const chatbox = document.getElementById("chatbox");
 
 let ws = null;
 
@@ -24,10 +25,23 @@ window.addEventListener("pageshow", () => {
         localStorage.setItem("ws_user_id", res.message);
         break;
       case "broadcast":
-        const message = document.createElement("li");
+        const chat = document.createElement("li");
+        chat.classList.add("chat");
+
+        const message = document.createElement("span");
         message.innerHTML = res.message;
-        chat_thread.appendChild(message);
+
+        const user_id = document.createElement("span");
+        user_id.innerHTML = res.user_id;
+
+        chat.appendChild(message);
+        chat.appendChild(user_id);
+
+        chat_thread.appendChild(chat);
         break;
+      case "success":
+        console.log(e.data);
+        chatbox.value = "";
     }
   };
 });

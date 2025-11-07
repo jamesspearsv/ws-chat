@@ -33,3 +33,9 @@ section {
     background-color: forestgreen;
     border-radius: 50%;
 }
+
+li.chat {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
