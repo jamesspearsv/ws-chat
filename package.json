@@ -1,21 +1,15 @@
 {
-  "name": "signaling-server",
-  "type": "module",
+  "name": "@jspearsv/wschat",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "dev:node": "tsx watch src/index.tsx",
-    "build": "tsc",
-    "start": "node dist/index.js"
+    "dev": "pnpm -r dev ",
+    "dev:client": "pnpm --filter \"client\" dev",
+    "dev:server": "pnpm --filter \"server\" dev"
   },
-  "dependencies": {
-    "@hono/node-server": "^1.19.6",
-    "@hono/node-ws": "^1.2.0",
-    "@types/ws": "^8.18.1",
-    "hono": "^4.10.4",
-    "nanoid": "^5.1.6"
-  },
-  "devDependencies": {
-    "@types/node": "^20.11.17",
-    "tsx": "^4.7.1",
-    "typescript": "^5.8.3"
-  }
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.11.0"
 }
