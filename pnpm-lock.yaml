@@ -44,15 +44,9 @@ importers:
       '@hono/node-ws':
         specifier: ^1.2.0
         version: 1.2.0(@hono/node-server@1.19.6(hono@4.10.4))(hono@4.10.4)
-      '@types/ws':
-        specifier: ^8.18.1
-        version: 8.18.1
       hono:
         specifier: ^4.10.4
         version: 4.10.4
-      nanoid:
-        specifier: ^5.1.6
-        version: 5.1.6
     devDependencies:
       '@types/node':
         specifier: ^20.11.17
@@ -377,9 +371,6 @@ packages:
   '@types/node@24.10.0':
     resolution: {integrity: sha512-qzQZRBqkFsYyaSWXuEHc2WR9c0a0CXwiE5FWUvn7ZM+vdy1uZLfCunD38UzhuB7YN/J11ndbDBcTmOdxJo9Q7A==}
 
-  '@types/ws@8.18.1':
-    resolution: {integrity: sha512-ThVF6DCVhA8kUGy+aazFQ4kXQ7E1Ty7A3ypFOe0IcJV8O/M511G99AW24irKrW56Wt44yG9+ij8FaqoBGkuBXg==}
-
   '@vitejs/plugin-vue@6.0.1':
     resolution: {integrity: sha512-+MaE752hU0wfPFJEUAIxqw18+20euHHdxVtMvbFcOEpjEyfqXH/5DCoTHiVJ0J29EhTJdoTkjEv5YBKU9dnoTw==}
     engines: {node: ^20.19.0 || >=22.12.0}
@@ -495,11 +486,6 @@ packages:
   nanoid@3.3.11:
     resolution: {integrity: sha512-N8SpfPUnUp1bK+PMYW8qSWdl9U+wwNWI4QKxOYDy9JAro3WMX7p2OeVRF9v+347pnakNevPmiHhNmZ2HbFA76w==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
-    hasBin: true
-
-  nanoid@5.1.6:
-    resolution: {integrity: sha512-c7+7RQ+dMB5dPwwCp4ee1/iV/q2P6aK1mTZcfr1BTuVlyW9hJYiMPybJCcnBlQtuSmTIWNeazm/zqNoZSSElBg==}
-    engines: {node: ^18 || >=20}
     hasBin: true
 
   path-browserify@1.0.1:
@@ -803,10 +789,6 @@ snapshots:
     dependencies:
       undici-types: 7.16.0
 
-  '@types/ws@8.18.1':
-    dependencies:
-      '@types/node': 20.19.24
-
   '@vitejs/plugin-vue@6.0.1(vite@7.2.2(@types/node@24.10.0)(tsx@4.20.6))(vue@3.5.24(typescript@5.9.3))':
     dependencies:
       '@rolldown/pluginutils': 1.0.0-beta.29
@@ -955,8 +937,6 @@ snapshots:
   muggle-string@0.4.1: {}
 
   nanoid@3.3.11: {}
-
-  nanoid@5.1.6: {}
 
   path-browserify@1.0.1: {}
 
