@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
+import { GenericResponse } from "@types/packages";
 
 const msg = defineModel("");
 
@@ -10,7 +11,14 @@ onMounted(() => {
     ws.onopen = () => console.log("### Connected to server");
 
     ws.onmessage = (e) => {
-        console.log(JSON.parse(e.data));
+        const res = JSON.parse(e.data) as GenericResponse;
+        console.log(res);
+
+        switch (res.action) {
+            case "open":
+                console.log(res);
+                break;
+        }
     };
 });
 </script>

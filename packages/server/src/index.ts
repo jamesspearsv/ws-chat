@@ -1,6 +1,6 @@
 import { serve } from "@hono/node-server";
 import { createNodeWebSocket } from "@hono/node-ws";
-import type { WSSResponse, Message } from "@packages/types";
+import type { ConnectionRes, Message } from "@packages/types";
 import { Hono } from "hono";
 import { nanoid } from "nanoid";
 
@@ -22,9 +22,10 @@ app.get(
 
         ws.send(
           JSON.stringify({
+            action: "open",
             user_id: nanoid(),
-            chat_thread,
-          } satisfies WSSResponse),
+            content: chat_thread,
+          } satisfies ConnectionRes),
         );
       },
       onClose: () => {},

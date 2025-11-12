@@ -4,9 +4,12 @@ export type Message = {
   timestamp: number;
 };
 
-// TODO: Add more response structure for other actions (e.g. broadcasting, message response, connection opening)
+// TODO: Add response generic type
+export interface GenericResponse<Action, Content> {
+  action: Action;
+  content: Content;
+}
 
-export type WSSResponse = {
+export interface ConnectionRes extends GenericResponse<"open", Message[]> {
   user_id: string;
-  chat_thread: Message[];
-};
+}
