@@ -4,12 +4,18 @@ export type Message = {
   timestamp: number;
 };
 
-// TODO: Add response generic type
-export interface GenericResponse<Action, Content> {
-  action: Action;
-  content: Content;
-}
-
-export interface ConnectionRes extends GenericResponse<"open", Message[]> {
+export type ConnectionInfo = {
   user_id: string;
+  chat_thread: Message[];
+};
+
+export type ClientMessage = {
+  user_id: string;
+  message: string;
+};
+
+// TODO: Add response generic type
+export interface WebSocketRes<T = unknown> {
+  action: 'open' | 'broadcast' | 'message';
+  message: T;
 }
