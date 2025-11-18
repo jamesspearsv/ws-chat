@@ -1,17 +1,17 @@
 import * as z from 'zod';
 
-export const Message = z.object({
+export const MessageSchema = z.object({
   user: z.string(),
   text: z.string(),
   timestamp: z.number(),
 });
 
-export const ConnectionInfo = z.object({
+export const ConnectionInfoSchema = z.object({
   user_id: z.string(),
-  chat_thread: z.array(Message),
+  chat_thread: z.array(MessageSchema),
 });
 
-export const ClientMessage = z.object({
+export const ClientMessageSchema = z.object({
   user_id: z.string(),
   message: z.string(),
 });

@@ -1,38 +1,35 @@
-import { serve } from '@hono/node-server';
-import { createNodeWebSocket } from '@hono/node-ws';
-import { cors } from 'hono/cors';
+import { serve } from "@hono/node-server";
+import { createNodeWebSocket } from "@hono/node-ws";
 import type {
   ClientMessage,
   ConnectionInfo,
   Message,
   WebSocketRes,
-} from '@packages/types';
-import { Hono } from 'hono';
-import { nanoid } from 'nanoid';
+} from "@packages/lib";
+import { Hono } from "hono";
+import { nanoid } from "nanoid";
 
 const app = new Hono();
 const { upgradeWebSocket, injectWebSocket, wss } = createNodeWebSocket({ app });
 
 const chat_thread: Message[] = [];
 
-app.use(cors());
-
-app.get('/', (c) => {
-  return c.text('Hello Hono!');
+app.get("/", (c) => {
+  return c.text("Hello Hono!");
 });
 
 app.get(
-  '/chat',
-  upgradeWebSocket((c) => {
+  "/chat",
+  upgradeWebSocket(() => {
     return {
       onOpen: (_, ws) => {
-        console.log('### Client connected');
+        console.log("### Client connected");
 
         ws.send(
           JSON.stringify({
-            action: 'open',
+            action: "open",
             message: { user_id: nanoid(), chat_thread },
-          } satisfies WebSocketRes<ConnectionInfo>)
+          } satisfies WebSocketRes<ConnectionInfo>),
         );
       },
       onClose: () => {},
@@ -48,29 +45,29 @@ app.get(
 
         chat_thread.push(broadcast_message);
 
-        wss.clients.forEach((client) => {
+        wss.clients.forEach((client: WebSocket) => {
           client.send(
             JSON.stringify({
-              action: 'broadcast',
+              action: "broadcast",
               message: broadcast_message,
-            } satisfies WebSocketRes<Message>)
+            } satisfies WebSocketRes<Message>),
           );
         });
       },
       onError: () => {},
     };
-  })
+  }),
 );
 
 const server = serve(
   {
     fetch: app.fetch,
     port: 3000,
-    hostname: '0.0.0.0',
+    hostname: "0.0.0.0",
   },
   (info) => {
     console.log(`Server is running on http://localhost:${info.port}`);
-  }
+  },
 );
 
 injectWebSocket(server);
