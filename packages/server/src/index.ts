@@ -3,16 +3,17 @@ import { createNodeWebSocket } from "@hono/node-ws";
 import type {
   ClientMessage,
   ConnectionInfo,
-  Message,
+  Broadcast,
   WebSocketRes,
 } from "@packages/lib";
 import { Hono } from "hono";
 import { nanoid } from "nanoid";
+import { handleMessageData } from "./action.js";
 
 const app = new Hono();
 const { upgradeWebSocket, injectWebSocket, wss } = createNodeWebSocket({ app });
 
-const chat_thread: Message[] = [];
+const chat_thread: Broadcast[] = [];
 
 app.get("/", (c) => {
   return c.text("Hello Hono!");
@@ -34,25 +35,22 @@ app.get(
       },
       onClose: () => {},
       onMessage: (e, ws) => {
-        const jsonData = JSON.parse(e.data as string);
-        const message = jsonData as ClientMessage;
+        const broadcast = handleMessageData(JSON.parse(e.data as string));
 
-        const broadcast_message = {
-          user: message.user_id,
-          text: message.message,
-          timestamp: Date.now(),
-        } satisfies Message;
+        console.log(broadcast);
 
-        chat_thread.push(broadcast_message);
+        if (broadcast) {
+          chat_thread.push(broadcast);
 
-        wss.clients.forEach((client: WebSocket) => {
-          client.send(
-            JSON.stringify({
-              action: "broadcast",
-              message: broadcast_message,
-            } satisfies WebSocketRes<Message>),
-          );
-        });
+          wss.clients.forEach((client: WebSocket) => {
+            client.send(
+              JSON.stringify({
+                action: "broadcast",
+                message: broadcast,
+              } satisfies WebSocketRes<Broadcast>),
+            );
+          });
+        }
       },
       onError: () => {},
     };
